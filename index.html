@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Binary Calculator</title>
+    <link rel="stylesheet" href="css/bootstrap-utilities.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        footer {
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            color: #fff;
+
+        }
+   
+    </style>
+</head>
+<body class="bg-dark">
+<div class="container">
+
+    <h1 class="display-1 text-light text-center p-3 mb-5 mt-5">Binary Calculator</h1>
+    <p class="display-6 text-center text-light">This Calculator Calculate From Binary To Decimal</p>
+    <span class="alert d-block alert-success alert-dismissible p-3">Enter A  Number In Binary 0 Or 1 </span>
+    <div class="input-group mb-3">
+
+        <input type="number" class="form-control p-3" placeholder="Enter A Binary Number: "  id='number' aria-label="Username" aria-describedby="basic-addon1">
+
+        <button class="btn btn-success">Calculate</button>
+
+    </div>
+    <div class="result">
+        <h3 class="display-4 text-light d-block"></h3>
+        <p class="formule text-light mb-5"></p>
+    </div>
+
+</div>
+
+    <footer class="p-3  text-center bg-primary ">Made By Kaci Oussama With ❤</footer>
+<script>
+    let number = document.querySelector('#number');
+    number.oninput = () => {
+       if(String(number.value).includes('2') || String(number.value).includes('3') || String(number.value).includes('4') || String(number.value).includes('5')|| String(number.value).includes('6') || String(number.value).includes('7') || String(number.value).includes('8') || String(number.value).includes('9')){
+           document.querySelector('span').classList.remove('alert-success');
+           document.querySelector('span').classList.add('alert-danger');
+           document.querySelector('span').innerHTML = "Invalid Value !";
+           document.querySelector('button').classList.remove('btn-success');
+           document.querySelector('button').classList.add('btn-danger');
+       }
+
+       else {
+           document.querySelector('span').classList.add('alert-success');
+           document.querySelector('span').classList.remove('alert-danger');
+           document.querySelector('span').innerHTML = "Enter A  Number In Binary 0 Or 1";
+           document.querySelector('button').classList.remove('btn-danger');
+           document.querySelector('button').classList.add('btn-success');
+       }
+    }
+    let btn = document.querySelector('button');
+    btn.onclick = () => {
+        let result = 0;
+       if(btn.classList[1] == 'btn-success' && number.value != ''){
+           let arr = [];
+           let formula = '';
+           let res = '';
+            for(let i = number.value.length - 1 ; i >= 0 ; i--){
+                arr.push(number.value[i]);
+            }
+            for(let j = 0 ; j < arr.length ; j++){
+                result+= arr[j] * Math.pow(2,j);
+                if(j != arr.length -1){
+                formula += `(${arr[j]} x 2<sup>${j}</sup>) + `;
+                res += `${arr[j] * Math.pow(2,j)} + `;
+                }
+                else{
+                    formula += `(${arr[j]}x 2<sup>${j}</sup>)`;
+                    res += ` ${arr[j] * Math.pow(2,j)} `;
+                }
+
+            }
+           document.querySelector('h3').innerHTML = `The Result is: ${result}`
+           document.querySelector('.formule').innerHTML = `${number.value} = ${formula}<p class="mb-5"> ${number.value} = ${res} = ${result}</p>`
+        }
+        else {
+            alert('Empty Value Or Invalid Value');
+           document.querySelector('h3').innerHTML = '';
+           document.querySelector('.formule').innerHTML = '';
+        }
+    }
+
+</script>
+</body>
+</html>
